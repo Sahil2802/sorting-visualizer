@@ -1,14 +1,12 @@
-// swap function util for sorting algorithms takes input of 2 DOM elements with .style.height feature
-function swap(el1, el2) {
-    console.log('In swap()');
-    
+// swap helper function for sorting algorithms
+function swap(el1, el2) {    
     let temp = el1.style.height;
     el1.style.height = el2.style.height;
     el2.style.height = temp;
     
 }
 
-// Disables sorting buttons used in conjunction with enable, so that we can disable during sorting and enable buttons after it
+// Disables sorting buttons while sorting animation is running
 function disableSortingBtn(){
     document.querySelector(".bubbleSort").disabled = true;
     document.querySelector(".insertionSort").disabled = true;
@@ -17,7 +15,7 @@ function disableSortingBtn(){
     document.querySelector(".selectionSort").disabled = true;
 }
 
-// Enables sorting buttons used in conjunction with disable
+// Enables sorting buttons after sorting animation is done
 function enableSortingBtn(){
     document.querySelector(".bubbleSort").disabled = false;
     document.querySelector(".insertionSort").disabled = false;
@@ -26,37 +24,37 @@ function enableSortingBtn(){
     document.querySelector(".selectionSort").disabled = false;
 }
 
-// Disables size slider used in conjunction with enable, so that we can disable during sorting and enable buttons after it
+// Disables size slider while animation is running
 function disableSizeSlider(){
-    document.querySelector("#arr_sz").disabled = true;
+    document.querySelector("#arr-size").disabled = true;
 }
 
-// Enables size slider used in conjunction with disable
+// Enables size slider after animation is done
 function enableSizeSlider(){
-    document.querySelector("#arr_sz").disabled = false;
+    document.querySelector("#arr-size").disabled = false;
 }
 
-// Disables newArray buttons used in conjunction with enable, so that we can disable during sorting and enable buttons after it
+// Disables Generate Array button while animation is running
 function disableNewArrayBtn(){
-    document.querySelector(".newArray").disabled = true;
+    document.querySelector(".arr-btn").disabled = true;
 }
 
-// Enables newArray buttons used in conjunction with disable
+// Enables Genrate Array button after animation is done
 function enableNewArrayBtn(){
-    document.querySelector(".newArray").disabled = false;
+    document.querySelector(".arr-btn").disabled = false;
 }
 
-// Used in async function so that we can so animations of sorting, takes input time in ms (1000 = 1s)
+
 function waitforme(milisec) { 
     return new Promise(resolve => { 
         setTimeout(() => { resolve('') }, milisec); 
     }) 
 }
 
-// Selecting size slider from DOM
-let arraySize = document.querySelector('#arr_sz');
+// Size Slider
+let arraySize = document.querySelector('#arr-size');
 
-// Event listener to update the bars on the UI
+// update the bars
 arraySize.addEventListener('input', function(){
     console.log(arraySize.value, typeof(arraySize.value));
     createNewArray(parseInt(arraySize.value));
@@ -65,23 +63,23 @@ arraySize.addEventListener('input', function(){
 // Default input for waitforme function (260ms)
 let delay = 260;
 
-// Selecting speed slider from DOM
+// Speed Slider
 let delayElement = document.querySelector('#speed_input');
 
-// Event listener to update delay time 
+// update delay time 
 delayElement.addEventListener('input', function(){
     console.log(delayElement.value, typeof(delayElement.value));
     delay = 320 - parseInt(delayElement.value);
 });
 
-// Creating array to store randomly generated numbers
+// Creating new empty array
 let array = [];
 
-// Call to display bars right when you visit the site
+// Load the array as soon as the page loads
 createNewArray();
 
-// To create new array input size of array
-function createNewArray(noOfBars = 60) {
+// create new array
+function createNewArray(noOfBars = 50) {
     // calling helper function to delete old bars from dom
     deleteChild();
 
@@ -92,11 +90,11 @@ function createNewArray(noOfBars = 60) {
     }
     console.log(array);
 
-    // select the div #bars element
     const bars = document.querySelector("#bars");
 
-    // create multiple element div using loop and adding class 'bar col'
+    // create multiple element div using loop
     for (let i = 0; i < noOfBars; i++) {
+        // adding class 'bar col'
         const bar = document.createElement("div");
         bar.style.height = `${array[i]*2}px`;
         bar.classList.add('bar');
@@ -106,14 +104,14 @@ function createNewArray(noOfBars = 60) {
     }
 }
 
-// Helper function to delete all the previous bars so that new can be added
+// Helper function to delete all the previous bars
 function deleteChild() {
     const bar = document.querySelector("#bars");
     bar.innerHTML = '';
 }
 
-// Selecting newarray button from DOM and adding eventlistener
-const newArray = document.querySelector(".newArray");
+// Selecting generate array button from DOM and adding eventlistener
+const newArray = document.querySelector(".arr-btn");
 newArray.addEventListener("click", function(){
     console.log("From newArray " + arraySize.value);
     console.log("From newArray " + delay);
